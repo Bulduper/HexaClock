@@ -17,11 +17,13 @@ All the hardware was designed, produced and assembled by me.
 
 - Multiple presets - the effects run one after another in a loop. To make it even more interesting they can run in random order 😀
 
-<img src="./images/effect1.gif" width=100>
-<img src="./images/effect2.gif" width=100>
-<img src="./images/effect3.gif" width=100>
-<img src="./images/effect4.gif" width=100>
-<img src="./images/effect5.gif" width=100>
+<p float="left">
+  <img src="./images/effect1.gif" width=100>
+  <img src="./images/effect2.gif" width=100>
+  <img src="./images/effect3.gif" width=100>
+  <img src="./images/effect4.gif" width=100>
+  <img src="./images/effect5.gif" width=100>
+</p>
 
 - Web app to control the effects
 - 🌅sunrise & sunset effects - A special effect plays
