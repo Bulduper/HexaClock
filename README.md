@@ -16,8 +16,18 @@ All the hardware was designed, produced and assembled by me.
 <img src="./images/night-mode.gif" width=100>
 
 - Multiple presets - the effects run one after another in a loop. To make it even more interesting they can run in random order 😀
+
+<img src="./images/effect1.gif" width=100>
+<img src="./images/effect2.gif" width=100>
+<img src="./images/effect3.gif" width=100>
+<img src="./images/effect4.gif" width=100>
+<img src="./images/effect5.gif" width=100>
+
 - Web app to control the effects
 - 🌅sunrise & sunset effects - A special effect plays
+
+<img src="./images/sunrise.gif" width=100><img src="./images/sunset.gif" width=100>
+
 - Automatic time setting - After a boot, it takes a few seconds for the clock to know the time!
 - Full control over the clock via the WLED API
 ## 🛠️Hardware - BOM
