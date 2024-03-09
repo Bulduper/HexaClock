@@ -1,7 +1,9 @@
 # 	&#11042;	 Hex Clock
-![icon-gif](/images/icon-gif.gif)
+<p align="center">
+  <img src="./images/icon-gif.gif" width=400>
+</p>
 
-#### Welcome to the repository made to share my awesome project with the world.
+### Welcome to the repository made to share my awesome project with the world.
 
 The *Hex Clock* is a hexagon-shaped LED matrix with each pixel also in the shape of a hexagon!
 There are 127 individual RGB pixels ready to pour some colors on your wall.
@@ -10,8 +12,8 @@ The project is based on an awesome and popular [WLED by Aircookie](https://githu
 
 All the hardware was designed, produced and assembled by me.
 ## 🎉Features
-- night mode - It does not make your eyes tired in the night
-- auto-brightness - It detects the ambient light level and auto-adjusts its brightness.
+- Night mode - It doesn't let your eyes get tired in the night... unless you wanna throw a 🎵🕺party🕺🎵 - then better keep the night mode off, let the 🎨 colors fill the room!
+- Auto-brightness - It detects the ambient light level and auto-adjusts its brightness.
 
 <img src="./images/night-mode.gif" width=100>
 
@@ -23,14 +25,22 @@ All the hardware was designed, produced and assembled by me.
   <img src="./images/effect3.gif" width=100>
   <img src="./images/effect4.gif" width=100>
   <img src="./images/effect5.gif" width=100>
+and more...
 </p>
 
 - Web app to control the effects
+  
+  <img src="./images/web-console.png" width=555>
+  <img src="./images/web-console-usermod.png" width=200>
+
 - 🌅sunrise & sunset effects - A special effect plays
 
 <img src="./images/sunrise.gif" width=100><img src="./images/sunset.gif" width=100>
 
 - Automatic time setting - After a boot, it takes a few seconds for the clock to know the time!
+
+<img src="./images/time-set.gif" width=100>
+
 - Full control over the clock via the WLED API
 ## 🛠️Hardware - BOM
 ### 3D Printed parts
@@ -52,7 +62,7 @@ You will find the `*.stl` files in the `/3d-model` folder.
 - PR photoresistor 5537 or similar (~20-50kOhm bright resistance)
 - C2A THT capacitor 220uF 16V
 - F2 SMD 1808 5A fuse + fuse holder
-- a bunch of 90&deg; 2.54mm male "dupont" pins
+- a bunch of 90&deg; angled 2.54mm male "dupont" pins
 - J2 jumper 2.54mm
 - R1B 6.8kOhm*
 - R2 10kOhm*
@@ -167,3 +177,8 @@ default_envs = d1_mini
 6. Go to the mDNS address you've specified.
 7. If you see the WLED dashboard, go to `/edit` path
 8. For each of the following files in the `/config` folder: `cfg.json`, `ledmap.json`, `ledmap1.json`, `presets.json` - click `Choose file and upload`
+
+## 📈Improvements for the future
+- Make the effects that are "shape-aware". Using the 2D, hexagonal matrix gives opportunities for very cool (much cooler than the current) effects.
+- Design the PCB in the same shape and size as the display, so that it's also a base. All the electronics components would be placed on in (including the LEDs, power connector and light sensor). It would make the assembly much easier.
+- Use ESP-32 - the modern, more powerful and more reliable board.
