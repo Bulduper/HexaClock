@@ -92,6 +92,11 @@ You will find the `*.stl` files in the `/3d-model` folder.
 - solder
 - wire stripper
 ## 💻Installation
+
+### Prerequisites
+In order to compile and upload the code to your ESP, you will need [VS Code](https://code.visualstudio.com/Download) installed. You will also need [PlatformIO](https://platformio.org/platformio-ide), a VS Code extension for embedded C/C++ development.
+
+### Setup and upload
 You can clone the [WLED-HexClock](https://github.com/Bulduper/WLED-HexClock.git) repository forked from the original WLED **[recommended]**. It already includes all the necessary changes to the code. Note that the fork might not have the latest version of the core.
 If you choose this method, go directly to the **step 9**.
 
@@ -162,7 +167,7 @@ default_envs = d1_mini
 ```
 9. Make sure that the power supply is disconnected
 10. Connect the jumper
-11. Connect the FTDI programmer
+11. Connect the FTDI programmer to your PC via USB cable and to the ESP via PCB pins.
 12. Press both RST and FLASH simultaneously, then release RST, then release FLASH buttons. This will make the board enter flash mode.
 12. Upload the code to ESP8266
 13. After the upload is done, disconnect the jumper and the FTDI programmer
@@ -179,6 +184,6 @@ default_envs = d1_mini
 8. For each of the following files in the `/config` folder: `cfg.json`, `ledmap.json`, `ledmap1.json`, `presets.json` - click `Choose file and upload`
 
 ## 📈Improvements for the future
-- Make the effects that are "shape-aware". Using the 2D, hexagonal matrix gives opportunities for very cool (much cooler than the current) effects.
+- Design "shape-aware" effects. Using the 2D, hexagonal matrix gives opportunities for very cool (much cooler than the current) effects.
 - Design the PCB in the same shape and size as the display, so that it's also a base. All the electronics components would be placed on in (including the LEDs, power connector and light sensor). It would make the assembly much easier.
 - Use ESP-32 - the modern, more powerful and more reliable board.
