@@ -1,11 +1,11 @@
-# 	&#11042;	 Hex Clock
+# 	&#11042;	 HexaClock
 <p align="center">
   <img src="./images/icon-gif.gif" width=400>
 </p>
 
 ### Welcome to the repository made to share my awesome project with the world.
 
-The *Hex Clock* is a hexagon-shaped LED matrix with each pixel also in the shape of a hexagon!
+The *Hexa Clock* is a hexagon-shaped LED matrix with each pixel also in the shape of a hexagon!
 There are 127 individual RGB pixels ready to pour some colors on your wall.
 
 The project is based on an awesome and popular [WLED by Aircookie](https://github.com/Aircoookie/WLED) project (software-wise). I created a usermod to adjust WLED for my weirdly shaped matrix and to display the time.
