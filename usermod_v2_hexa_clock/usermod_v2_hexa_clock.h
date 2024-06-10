@@ -54,7 +54,7 @@
  */
 
 //class name. Use something descriptive and leave the ": public Usermod" part :)
-class HexClock : public Usermod {
+class HexaClock : public Usermod {
   private:
 
   float referenceVoltage = USERMOD_SN_PHOTORESISTOR_REFERENCE_VOLTAGE;
@@ -80,11 +80,11 @@ class HexClock : public Usermod {
     uint8_t reverseRoundMap[LEDS_NO];
     uint8_t reverseVerticalMap[LEDS_NO];
     bool autoBrightnessEnabled = true;
-    float autoBrightnessACoeff = 2.0;
+    float autoBrightnessACoeff = 0.5;
     float autoBrightnessBCoeff = 0.0;
     byte autoBrightnessMinBri = 10;
     bool powerOn = true;
-    bool nightModeEnabled = false;
+    bool nightModeEnabled = true;
     bool nightModeOn = false;
     uint16_t nightModeThreshold = 10;
     byte nightModeBri = 1;
@@ -121,7 +121,7 @@ class HexClock : public Usermod {
      * You can use it to initialize variables, sensors or similar.
      */
     void setup() {
-      Serial.println("Hello from hex_clock usermod!");
+      Serial.println("Hello from hexa_clock usermod!");
 
       for(int i=0; i<LEDS_NO; i++)
       {
@@ -433,7 +433,7 @@ class HexClock : public Usermod {
      */
     uint16_t getId()
     {
-      return USERMOD_ID_HEX_CLOCK;
+      return USERMOD_ID_HEXA_CLOCK;
     }
 
    //More methods can be added in the future, this example will then be extended.

@@ -56,7 +56,8 @@ You will find the `*.stl` files in the `/3d-model` folder.
 ### Electronics
 ![pcb-and-components](images/pcb-and-components.jpg)
 - custom PCB
-- ESP8266-12E/F [LINK](https://www.aliexpress.com/item/1005004265299852.html?pdp_npi=4%40dis%21USD%21US%20%241.02%21US%20%241.02%21%21%211.02%211.02%21%402103850917095823909064578eaf19%2112000037068996314%21sh%21PL%21838748658%21&spm=a2g0o.store_pc_allItems_or_groupList.new_all_items_2007585817841.1005004265299852)
+- ESP8266-12E/F [LINK](https://www.aliexpress.com/item/1005004265299852.html?pdp_npi=4%40dis%21USD%21US%20%241.02%21US%20%241.02%21%21%211.02%211.02%21%402103850917095823909064578eaf19%2112000037068996314%21sh%21PL%21838748658%21&spm=a2g0o.store_pc_allItems_or_groupList.new_all_items_2007585817841.1005004265299852) 
+>*ESP32 is also supported (tested with ESP-32 devkit with WROOM-32)*
 - FTDI programmer + wires
 - 2x tact switch 5mm
 - PR photoresistor 5537 or similar (~20-50kOhm bright resistance)
@@ -98,22 +99,22 @@ In order to compile and upload the code to your ESP, you will need [VS Code](htt
 
 ### Setup and upload
 You can clone the [WLED-HexClock](https://github.com/Bulduper/WLED-HexClock.git) repository forked from the original WLED **[recommended]**. It already includes all the necessary changes to the code. Note that the fork might not have the latest version of the core.
-If you choose this method, go directly to the **step 9**.
+If you choose this method, go directly to the **step 10**.
 
 If you prefer to work on the vanilla WLED follow all the steps:
 
 1. Clone the original WLED by Aircoookie repository `git clone https://github.com/Aircoookie/WLED.git`.
 
-2. Copy the `usermod_v2_hex_clock` folder and paste into the original `WLED/usermods` folder. 
+2. Copy the `usermod_v2_hexa_clock` folder and paste into the original `WLED/usermods` folder. 
 
-3. To `WLED/wled00/wled.h` add `WLED_GLOBAL int8_t currentLedmap _INIT(-1);` (line 240)
+3. To `WLED/wled00/wled.h` add `WLED_GLOBAL int8_t currentLedmap _INIT(-1);` (around line 240)
 ```cpp
 // Global Variable definitions
 WLED_GLOBAL int8_t currentLedmap _INIT(-1);
 WLED_GLOBAL char versionString[] _INIT(TOSTRING(WLED_VERSION));
 ```
 
-4. And to `WLED/wled00/wled.cpp` add `currentLedmap = loadLedmap;` (line 177)
+4. And to `WLED/wled00/wled.cpp` add `currentLedmap = loadLedmap;` (around line 177)
 ```cpp
   if (loadLedmap >= 0) {
     if (!strip.deserializeMap(loadLedmap) && strip.isMatrix && loadLedmap == 0) strip.setUpMatrix();
@@ -121,15 +122,19 @@ WLED_GLOBAL char versionString[] _INIT(TOSTRING(WLED_VERSION));
     loadLedmap = -1;
   }
 ```
-5. To `WLED/wled00/usermods_list.cpp` add `#include "../usermods/usermod_v2_hex_clock/usermod_v2_hex_clock.h"` (line 176)
+5. To `WLED/wled00/usermods_list.cpp` add `#ifdef USERMOD_HEXA_CLOCK
+  #include "../usermods/usermod_v2_hexa_clock/usermod_v2_hexa_clock.h"
+#endif` (around line 176)
 ```cpp
 #endif
 
-#include "../usermods/usermod_v2_hex_clock/usermod_v2_hex_clock.h"
+#ifdef USERMOD_HEXA_CLOCK
+  #include "../usermods/usermod_v2_hexa_clock/usermod_v2_hexa_clock.h"
+#endif
 
 #if defined(WLED_USE_SD_MMC) || defined(WLED_USE_SD_SPI)
 ```
-6. To `WLED/wled00/usermods_list.cpp` add `usermods.add(new HexClock());` (line 202)
+6. To `WLED/wled00/usermods_list.cpp` add `usermods.add(new HexaClock());` (around line 202)
 ```cpp
 void registerUsermods()
 {
@@ -138,50 +143,51 @@ void registerUsermods()
    * || || ||
    * \/ \/ \/
    */
-  usermods.add(new HexClock());
+  #ifdef USERMOD_HEXA_CLOCK
+  usermods.add(new HexaClock());
+  #endif
   //usermods.add(new MyExampleUsermod());
 ```
-7. To `WLED/wled00/const.h` add `#define USERMOD_ID_HEX_CLOCK             41     // Usermod Hex-Clock` (line 155)
+7. To `WLED/wled00/const.h` add `#define USERMOD_ID_HEXA_CLOCK             41     // Usermod Hexa-Clock` (around line 155)
 ```cpp
-#define USERMOD_ID_KLIPPER               40     // Usermod Klipper percentage
-#define USERMOD_ID_HEX_CLOCK             41     // Usermod Hex-Clock
+#define USERMOD_ID_STAIRWAY_WIPE         44     //Usermod "stairway-wipe-usermod-v2.h"
+#define USERMOD_ID_HEXA_CLOCK            45     //Usermod Hexa-Clock
 //Access point behavior
 ```
-8. Comment out line 14 in `WLED/platform.ini`
+8. Comment out line 14 in `WLED/platform.ini`. **Make sure that all `default_envs` are commented out in the main platformio.ini file**.
 ```ini
 # CI binaries
 ;; default_envs = nodemcuv2, esp8266_2m, esp01_1m_full, esp32dev, esp32_eth # ESP32 variant builds are temporarily excluded from CI due to toolchain issues on the GitHub Actions Linux environment
 ;default_envs = nodemcuv2, esp8266_2m, esp01_1m_full, esp32dev, esp32_eth, lolin_s2_mini, esp32c3dev, esp32s3dev_8MB
 ```
-
-And uncomment `nodemcuv2` and `d1_mini` (below line 22)
-```ini
-# Single binaries (uncomment your board)
-; default_envs = elekstube_ips
-default_envs = nodemcuv2
-; default_envs = esp8266_2m
-; default_envs = esp01_1m_full
-; default_envs = esp07
-default_envs = d1_mini
-; default_envs = heltec_wifi_kit_8
+9. Copy the `usermod_v2_hexa_clock/platformio_override.ini` file into the main `WLED` folder (next to `WLED/platformio.ini`).
+10. Choose your board in `platformio_override.ini`
+```toml
+[platformio]
+# Choose depending on your board type (ESP8266 or ESP32)
+default_envs = HexaClock_ESP8266
+; default_envs = HexaClock_ESP32
 ```
-9. Make sure that the power supply is disconnected
-10. Connect the jumper
-11. Connect the FTDI programmer to your PC via USB cable and to the ESP via PCB pins.
-12. Press both RST and FLASH simultaneously, then release RST, then release FLASH buttons. This will make the board enter flash mode.
-12. Upload the code to ESP8266
-13. After the upload is done, disconnect the jumper and the FTDI programmer
+11. Make sure that the power supply is disconnected
+12. Connect the jumper
+13. \* Connect the FTDI programmer to your PC via USB cable and to the ESP via PCB pins.
+14. \* Press both RST and FLASH simultaneously, then release RST, then release FLASH buttons. This will make the board enter flash mode.
+15. Upload the code to ESP
+16. After the upload is done, disconnect the jumper and the FTDI programmer
+
+\* Required for non-dev boards only
 
 ## 1️⃣First run
 0. Power up the clock
-1. Connect to WLED-AP wifi using your smartphone or PC
-2. Go to 4.3.2.1 (default ip address) in your browser and input your local wifi network's SSID and password.
-3. Specify a friendly mDNS address e.g. http://hex-clock.local
-4. Click Save & connect
-5. Connect back to your local WiFi network
-6. Go to the mDNS address you've specified.
-7. If you see the WLED dashboard, go to `/edit` path
-8. For each of the following files in the `/config` folder: `cfg.json`, `ledmap.json`, `ledmap1.json`, `presets.json` - click `Choose file and upload`
+1. Connect to `HexaClock-AP` wifi access point using your smartphone or PC
+2. Go to `4.3.2.1` (default ip address) in your browser
+3. If you see the WLED dashboard, go to `4.3.2.1/edit` 
+4. For each of the following files in the `/config` folder: `cfg.json`, `ledmap.json`, `ledmap1.json`, `presets.json` - click `Choose file and upload`. At the end of the operation you should have 4 files uploaded to `/edit` path.
+5. Configure your HexaClock to connect to your existing network
+6. [Optional] Specify a friendly mDNS address e.g. http://hexa-clock.local
+7. Click Save & connect
+8. Connect back to your local WiFi network on our PC
+9. Go to the mDNS address you've specified. If the mDNS address does not resolve, scan your network (e.g. using AngryIP Scanner) to discover the IP address of your HexaClock.
 
 ## 📈Improvements for the future
 - Design "shape-aware" effects. Using the 2D, hexagonal matrix gives opportunities for very cool (much cooler than the current) effects.
