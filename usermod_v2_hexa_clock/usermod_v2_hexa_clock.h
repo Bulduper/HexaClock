@@ -356,15 +356,16 @@ class HexaClock : public Usermod {
       int pixelsNo = 13 - (orientation%2);
       //used when reversing digits
       bool reverseMask[LEDS_NO] = {false};
+      uint8_t local_hours = !useAMPM ? hours : (hours>12 ? hours-12 : (hours==0 ? 12 : hours));
 
       for(int p = 0; p < 4; p++)
       {
         switch(p){
           case 0:
-            digit = hours/10;
+            digit = local_hours/10;
             break;
           case 1:
-            digit = hours%10;
+            digit = local_hours%10;
             break;
           case 2:
             digit = minutes/10;
